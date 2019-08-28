@@ -26,8 +26,8 @@ def BNDM(Text, Pattern):
     while (pos <= n-m):
         j = m - 1
         last = m 
-        d = 1
-        while (d != 0 and j >= 0):
+        d = ~0
+        while (d != 0 and j >=0):
             if Text[pos+j] in B: 
                 d = d & B[Text[pos+j]]    
             else:
@@ -35,11 +35,11 @@ def BNDM(Text, Pattern):
             j = j - 1
             if d != 0:
                 if (j >= 0):
-                    last = j
+                    last = j + 1
                 else:
-                    print(pos)
+                    print(pos + 1)
             d = d << 1
         pos = pos + last
         
 if __name__ == "__main__": 
-    BNDM("acggtgac", "tgac")
+    BNDM("heihei", "hei")
