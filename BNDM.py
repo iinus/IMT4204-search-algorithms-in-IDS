@@ -26,7 +26,7 @@ def BNDM(Text, Pattern):
     while (pos <= n-m):
         j = m - 1
         last = m 
-        d = ~0
+        d = 1
         while (d != 0 and j >= 0):
             if Text[pos+j] in B: 
                 d = d & B[Text[pos+j]]    
