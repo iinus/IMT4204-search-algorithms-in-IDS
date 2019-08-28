@@ -4,32 +4,47 @@
 # incidence_matrix(G, nodelist=None, edgelist=None, oriented=False, weight=None) ? 
 
 def BNDM(Text, Pattern):
-    print("init...")
+    print("pre-processing...")
+    print("Text: " + Text + " Pattern: " + Pattern)
     n = len(Text)
     m = len(Pattern)
     r = 26 # alphabet size
 # pre-processing: compute incidence matrix B of P 
     B = [[ 0 for i in range(r) ] for j in range(m)]
+    B = {(rx, cx): c for rx, r in enumerate(B)\
+                for cx, c in enumerate(r)}
     s = 1 
-    for i in range (0, m-1):
-        B[Pattern[i]] = B[Pattern[i]] | s # Assigment by bitwise OR 
-        s <<= 1 # bitwise left-shift
+    q = int(format(0, '0'+str(m)))
+    for i in range (0, m):
+        key_exists = 1
+        if Pattern[i] in B: 
+            key_exists = 0 
+        B[Pattern[i]] = s | key_exists
+        s <<= 1
+        #q = int(format(0, '0'+ str(m)))   
     print(B)
+
 # search phase
-    j = 0
-    while j <= (n-m):
-        i = m-1
-        last = m
+    print("searching...")
+    i = m
+    while i <= n:
+        j = -1
+        last = 0
         d = ~0
-        while i>=0 and d != 0:
-            d = d & B[j+i]
-            i = i-1
-            if i >= 0:
-                last = i + 1
-            else:
-                print(j)
-            d <<= 1
-        j += last
+        D = 1 ^ m
+        W=Text[i - m]
+        while D != 0 ^ m:
+            j = j + 1
+            D = D & B[W]
+            if D == 0^m:
+                break
+            if j == m:
+                print("Occurence of T: " + Pattern[i-m] + " at pos " + str(i-m))
+                break
+            if j < m:
+                last = j
+            D = D << 1
+        i = i + (m - last)
 
 if __name__ == "__main__": 
     BNDM("acggtgac", "tgac")
