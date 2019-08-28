@@ -13,12 +13,12 @@ def BNDM(Text, Pattern):
     B = [[ 0 for i in range(r) ] for j in range(m)]
     B = {(rx, cx): c for rx, r in enumerate(B)\
                 for cx, c in enumerate(r)}
-    s = 1 
+    s = 0x1 
     q = int(format(0, '0'+str(m)))
     for i in range (0, m):
-        key_exists = 1
+        key_exists = 0x1
         if Pattern[i] in B: 
-            key_exists = 0 
+            key_exists = 0x0 
         B[Pattern[i]] = s | key_exists
         s <<= 1
         #q = int(format(0, '0'+ str(m)))   
