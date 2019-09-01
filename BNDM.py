@@ -4,23 +4,29 @@
 # Input: two strings T (length n) and P (length m)
 # Output: The locations of all occurences of P in T 
 
-def BNDM(Text, Pattern):
-    print("pre-processing...")
-    print("Text: " + Text + " Pattern: " + Pattern)
-    n = len(Text)
-    m = len(Pattern)
-    r = 26 # alphabet size
-# pre-processing: compute incidence matrix B of P 
-    B = [[ 0 for i in range(m) ] for j in range(m)]
-    B = {(rx, cx): c for rx, r in enumerate(B)\
-                for cx, c in enumerate(r)}
-    s = 1 
-    for i in range (m-1, -1, -1):
-        key_exists = 0
-        if Pattern[m-i-1] in B: 
-            key_exists = B[Pattern[m-i-1]]
-        B[Pattern[m-i-1]] = s | key_exists
+CEND = '\033[0m'
+BOLD = '\033[1m'
+UNDERLINE = '\033[4m'
+CGREEN  = '\33[32m'
+OKRED    = '\033[1m\33[31m'
+CBLUE   = '\33[34m'
+
+def create_bitmask_table(pattern, m):
+    B={-1:0}
+    m = len(pattern)
+    s=1
+    for i in range(m-1,-1,-1):
+        B[pattern[i]] = B.get(pattern[i],0) | s
         s <<= 1
+    return B
+
+
+def BNDM(text, pattern):
+    print("pre-processing...")
+    print("Text: " + text + " Pattern: " + pattern)
+    n = len(text)
+    m = len(pattern)
+    B = create_bitmask_table(pattern, m)
 
 # search phase
     print("searching...")
@@ -29,20 +35,20 @@ def BNDM(Text, Pattern):
         j = m - 1
         last = m 
         d = ~0
-        while (d != 0 and j >=0):
-            if Text[pos+j] in B: 
-                d = d & B[Text[pos+j]]    
+        while (d != 0 and j >= 0):
+            if text[pos+j] in B: 
+                d = d & B[text[pos+j]]    
             else:
                 d = d & 0
             j = j - 1
             if d != 0:
                 if (j >= 0):
                     last = j + 1
-                    print ("pos: " + str(pos+j+1) + " Text " + Text[pos+j+1])
                 else:
-                    print(pos)
+                    print(BOLD + "[+] Found pattern " + CGREEN + text[pos:pos+m] + CEND + BOLD + " at pos " + CBLUE + str(pos) + CEND)
+                    
             d = d << 1
         pos = pos + last
-        
+           
 if __name__ == "__main__": 
-    BNDM("abacadabra", "bra")
+    BNDM("abacadabrabra", "bra")
