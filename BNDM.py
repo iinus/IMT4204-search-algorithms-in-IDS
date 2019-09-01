@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# Compiled with python 3.6.3
 
 # Input: two strings T (length n) and P (length m)
 # Output: The locations of all occurences of P in T 
@@ -36,10 +38,11 @@ def BNDM(Text, Pattern):
             if d != 0:
                 if (j >= 0):
                     last = j + 1
+                    print ("pos: " + str(pos+j+1) + " Text " + Text[pos+j+1])
                 else:
-                    print(pos + 1)
+                    print(pos)
             d = d << 1
         pos = pos + last
         
 if __name__ == "__main__": 
-    BNDM("heihei", "hei")
+    BNDM("abacadabra", "bra")
