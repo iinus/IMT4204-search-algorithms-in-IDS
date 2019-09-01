@@ -11,9 +11,6 @@ CGREEN  = '\33[32m'
 OKRED    = '\033[1m\33[31m'
 CBLUE   = '\33[34m'
 
-def main():
-    find = []
-
 def create_bitmask_table(pattern, m):
     # creates the bitmask table from pattern
     bitmask = {} 
@@ -32,12 +29,12 @@ def shift_or(text, pattern):
     bitmask = create_bitmask_table(pattern, m)
 
     # search phase
-    D = allones
+    d = allones
     hit = (1 << (m - 1))
     for i in range(0, n):
         found = 0
-        D = (((D << 1) & allones) | bitmask.get(text[i], allones))
-        if D & hit == 0:
+        d = (((d << 1) & allones) | bitmask.get(text[i], allones))
+        if d & hit == 0:
             found = 1
             pos = i - m + 1
             print(BOLD + "[+] Found pattern " + CGREEN + text[pos:pos+m] + CEND + BOLD + " at pos " + CBLUE + str(pos) + CEND)
