@@ -4,13 +4,6 @@
 # Input: two strings T (length n) and P (length m)
 # Output: The locations of all occurences of P in T 
 
-CEND = '\033[0m'
-BOLD = '\033[1m'
-UNDERLINE = '\033[4m'
-CGREEN  = '\33[32m'
-OKRED    = '\033[1m\33[31m'
-CBLUE   = '\33[34m'
-
 def create_bitmask_table(pattern, m):
     B={-1:0}
     m = len(pattern)
@@ -20,17 +13,14 @@ def create_bitmask_table(pattern, m):
         s <<= 1
     return B
 
-
 def BNDM(text, pattern):
-    print("pre-processing...")
-    print("Text: " + text + " Pattern: " + pattern)
     n = len(text)
     m = len(pattern)
     B = create_bitmask_table(pattern, m)
 
 # search phase
-    print("searching...")
     pos = 0
+    positions = [] # store all positions found
     while (pos <= n-m):
         j = m - 1
         last = m 
@@ -45,10 +35,9 @@ def BNDM(text, pattern):
                 if (j >= 0):
                     last = j + 1
                 else:
-                    print(BOLD + "[+] Found pattern " + CGREEN + text[pos:pos+m] + CEND + BOLD + " at pos " + CBLUE + str(pos) + CEND)
-                    
+                    positions.append(pos)
             d = d << 1
         pos = pos + last
+    return positions
            
-if __name__ == "__main__": 
-    BNDM("abacadabrabra", "bra")
+
