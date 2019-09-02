@@ -14,14 +14,11 @@ def create_bitmask_table(pattern, m):
     return B
 
 def BNDM(text, pattern):
-    print("pre-processing...")
-    print("Text: " + text + " Pattern: " + pattern)
     n = len(text)
     m = len(pattern)
     B = create_bitmask_table(pattern, m)
 
 # search phase
-    print("searching...")
     pos = 0
     positions = [] # store all positions found
     while (pos <= n-m):
