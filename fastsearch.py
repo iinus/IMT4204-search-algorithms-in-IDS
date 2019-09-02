@@ -29,16 +29,17 @@ if __name__=="__main__":
     text = args[0]
     pattern = args[1]
     m = len(pattern)
+    number = 10000
 
-    if options.time:
-        positions = BNDM.BNDM(text, pattern)
-        execution_time = timeit.timeit('BNDM.BNDM(text, pattern)', 'from __main__ import BNDM, text, pattern', number=100)
-        print (BOLD + "[*] Execution time: " + CBLUE + str(execution_time) + CEND)
     if options.shift_or:
         positions = shift_or.shift_or(text, pattern)
+        execution_time = timeit.timeit('shift_or.shift_or(text, pattern)', 'from __main__ import shift_or, text, pattern', number=number)
     else:
         positions = BNDM.BNDM(text, pattern)
-    
+        execution_time = timeit.timeit('BNDM.BNDM(text, pattern)', 'from __main__ import BNDM, text, pattern', number=number)
+    if options.time:        
+        execution_time = execution_time / number
+        print (BOLD + "[*] Execution time: " + CBLUE + str(execution_time) + CEND)
     if len(positions) > 0:
         for pos in positions:
             print(BOLD + "[+] Found pattern " + CGREEN + text[pos:pos+m] + CEND + BOLD + " at pos " + CBLUE + str(pos) + CEND)
