@@ -19,8 +19,8 @@ if __name__=="__main__":
         sys.stderr.write("fastsearch requires python version > 3.0, please upgrade your python installation.")
         sys.exit(1)
     
-    usage = "usage: python3 %prog [options] [arg1] [arg2] " 
-    parser = OptionParser(usage=usage, version = "%prog 1.0")
+    usage = "usage: python3 %prog [options] [text] [pattern] " 
+    parser = OptionParser(usage=usage)
     parser.add_option("--SO", help="Specify Shift-OR as alogorithm. Default is BNDM. ", default=None, action='store_true', dest="shift_or")
     parser.add_option("--time", help="Print the time the execution time of algorithm", default=None, action='store_true', dest="time")
 
@@ -29,7 +29,7 @@ if __name__=="__main__":
     text = args[0]
     pattern = args[1]
     m = len(pattern)
-    number = 10000
+    number = 100000
 
     if options.shift_or:
         positions = shift_or.shift_or(text, pattern)
