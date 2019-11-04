@@ -16,6 +16,7 @@ def create_bitmask_table(pattern, m):
 def BNDM(text, pattern):
     n = len(text)
     m = len(pattern)
+# pre-processing
     B = create_bitmask_table(pattern, m)
 
 # search phase
@@ -40,4 +41,3 @@ def BNDM(text, pattern):
         pos = pos + last
     return positions
            
-

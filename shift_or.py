@@ -4,13 +4,6 @@
 # Input: two strings text (length n) and pattern (length m)
 # Output: all occurences of P in T 
 
-CEND = '\033[0m'
-BOLD = '\033[1m'
-UNDERLINE = '\033[4m'
-CGREEN  = '\33[32m'
-OKRED    = '\033[1m\33[31m'
-CBLUE   = '\33[34m'
-
 def create_bitmask_table(pattern, m):
     # creates the bitmask table from pattern
     bitmask = {} 
@@ -25,14 +18,14 @@ def shift_or(text, pattern):
     allones = neg(0)
     positions = []
 
-    # Pre-processing: create bitmask table
-    bitmask = create_bitmask_table(pattern, m)
+# Pre-processing: create bitmask table
+    B = create_bitmask_table(pattern, m)
 
-    # search phase
+# search phase
     d = allones
     hit = (1 << (m - 1))
     for i in range(0, n):
-        d = (((d << 1) & allones) | bitmask.get(text[i], allones))
+        d = (((d << 1) & allones) | B.get(text[i], allones))
         if d & hit == 0:
             pos = i - m + 1
             positions.append(pos)
@@ -42,5 +35,3 @@ def shift_or(text, pattern):
 def neg(x):
     return 0b11111111111111111111111111111111 - x
 
-if __name__ == "__main__": 
-    shift_or("bbr", "bra")
